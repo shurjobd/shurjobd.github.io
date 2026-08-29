@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shurjo | Turning Bangladesh's Waste into Bangladesh's Wealth</title>
+<meta name="description" content="Shurjo collects, sorts and transforms Bangladesh's waste into premium products that create jobs, cut pollution and build a circular economy.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Karla:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   SHURJO  |  design tokens
+   Palette pulled from the Instagram grid: deep bottle green,
+   antique gold, warm parchment.
+   ============================================================ */
+:root{
+  --ink:        #04150C;
+  --forest:     #0A2A1B;
+  --forest-mid: #0E3823;
+  --forest-lift:#134430;
+  --gold:       #D3A63C;
+  --gold-lit:   #F1CE79;
+  --gold-deep:  #A87C1E;
+  --parchment:  #F7F2E6;
+  --sand:       #CFC5AC;
+  --sand-dim:   #9BA692;
+
+  --display: "Cormorant Garamond", "Cormorant", Georgia, "Times New Roman", serif;
+  --body: "Karla", "Segoe UI", -apple-system, Helvetica, Arial, sans-serif;
+
+  --gutter: clamp(1.25rem, 5vw, 5rem);
+  --rule: 1px solid rgba(211,166,60,.22);
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:smooth; -webkit-text-size-adjust:100%;}
+body{
+  margin:0;
+  background:var(--ink);
+  color:var(--sand);
+  font-family:var(--body);
+  font-size:clamp(1rem,.96rem + .2vw,1.075rem);
+  line-height:1.72;
+  font-weight:300;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block;}
+a{color:inherit;}
+
+/* fine grain so the large flat greens don't look like flat CSS */
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.045;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---------- type ---------- */
+h1,h2,h3,h4{font-family:var(--display);font-weight:500;line-height:1.06;margin:0;letter-spacing:.005em;}
+h2{font-size:clamp(2.4rem,1.5rem + 3.6vw,4.4rem);}
+h3{font-size:clamp(1.35rem,1.15rem + .8vw,1.8rem);}
+p{margin:0 0 1.1em;}
+p:last-child{margin-bottom:0;}
+
+.eyebrow{
+  font-family:var(--body);font-size:.7rem;font-weight:600;
+  letter-spacing:.34em;text-transform:uppercase;color:var(--gold);
+  display:flex;align-items:center;gap:.85rem;margin-bottom:1.5rem;
+}
+.eyebrow::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(211,166,60,.55),transparent);max-width:11rem;}
+.eyebrow.center{justify-content:center;}
+.eyebrow.center::before{content:"";flex:1;height:1px;background:linear-gradient(270deg,rgba(211,166,60,.55),transparent);max-width:6rem;}
+.eyebrow.center::after{max-width:6rem;}
+
+.gilt{
+  background:linear-gradient(100deg,var(--gold-deep) 0%,var(--gold-lit) 38%,var(--gold) 62%,var(--gold-lit) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.lede{font-size:clamp(1.05rem,1rem + .45vw,1.3rem);color:#E4DDCB;font-weight:300;}
+
+/* ---------- layout ---------- */
+.wrap{width:min(1180px,100%);margin-inline:auto;padding-inline:var(--gutter);}
+section{padding-block:clamp(4.5rem,3rem + 8vw,9rem);position:relative;}
+.on-forest{background:var(--forest);}
+.on-deep{background:var(--ink);}
+.on-parchment{background:var(--parchment);color:#31402F;}
+.on-parchment h2,.on-parchment h3{color:#0A2A1B;}
+.on-parchment .eyebrow{color:var(--gold-deep);}
+.on-parchment .eyebrow::after,.on-parchment .eyebrow::before{background:linear-gradient(90deg,rgba(168,124,30,.5),transparent);}
+
+/* hairline between green sections */
+.hairline{border-top:var(--rule);}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav{
+  position:fixed;inset:0 0 auto 0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:1rem;padding:1rem var(--gutter);
+  transition:background .4s ease,box-shadow .4s ease,padding .4s ease,border-color .4s;
+  border-bottom:1px solid transparent;
+}
+.nav.stuck{
+  background:rgba(4,21,12,.9);backdrop-filter:blur(14px);
+  border-bottom-color:rgba(211,166,60,.2);padding-block:.6rem;
+}
+.brandmark{display:flex;align-items:center;gap:.65rem;text-decoration:none;flex-shrink:0;}
+.brandmark svg{width:30px;height:30px;flex-shrink:0;}
+.brandmark span{
+  font-family:var(--display);font-size:1.5rem;color:var(--gold-lit);
+  letter-spacing:.06em;line-height:1;
+}
+.navlinks{display:flex;gap:1.9rem;align-items:center;}
+.navlinks a{
+  text-decoration:none;font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;
+  font-weight:500;color:var(--sand);position:relative;padding-block:.35rem;white-space:nowrap;
+}
+.navlinks a::after{
+  content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--gold);transition:width .35s ease;
+}
+.navlinks a:hover{color:var(--gold-lit);}
+.navlinks a:hover::after{width:100%;}
+.navlinks a.pill{
+  border:1px solid rgba(211,166,60,.55);border-radius:999px;padding:.5rem 1.05rem;color:var(--gold-lit);
+}
+.navlinks a.pill::after{display:none;}
+.navlinks a.pill:hover{background:var(--gold);color:var(--ink);border-color:var(--gold);}
+.burger{display:none;background:none;border:1px solid rgba(211,166,60,.4);border-radius:4px;padding:.5rem .6rem;cursor:pointer;}
+.burger span{display:block;width:20px;height:1.5px;background:var(--gold-lit);margin:4px 0;transition:.3s;}
+
+@media(max-width:900px){
+  .burger{display:block;}
+  .navlinks{
+    position:fixed;inset:0 0 0 auto;width:min(320px,82vw);
+    background:var(--forest);flex-direction:column;justify-content:center;gap:1.6rem;
+    transform:translateX(105%);transition:transform .45s cubic-bezier(.6,0,.2,1);
+    border-left:1px solid rgba(211,166,60,.25);
+  }
+  .navlinks.open{transform:translateX(0);}
+  .navlinks a{font-size:.9rem;}
+}
+
+/* ============================================================
+   HERO  |  signature element: the rising sun over the horizon
+   ============================================================ */
+.hero{
+  min-height:100svh;display:grid;place-items:center;text-align:center;
+  padding:7rem var(--gutter) clamp(7rem,17vh,11rem);position:relative;overflow:hidden;
+  background:
+    radial-gradient(120% 78% at 50% 74%, #16512F 0%, #0C3520 32%, #072116 62%, var(--ink) 100%);
+}
+.sunwrap{
+  position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);
+  width:min(1080px,150vw);aspect-ratio:1;pointer-events:none;z-index:0;
+}
+.rays{width:100%;height:100%;animation:turn 150s linear infinite;transform-origin:50% 50%;}
+@keyframes turn{to{transform:rotate(360deg);}}
+.glow{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:40%;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle,rgba(241,206,121,.42) 0%,rgba(211,166,60,.18) 44%,transparent 70%);
+  filter:blur(32px);animation:breathe 7s ease-in-out infinite;
+}
+@keyframes breathe{0%,100%{opacity:.75;}50%{opacity:1;}}
+
+/* the horizon: waste below, light above. the thesis of the brand. */
+.horizon{
+  position:absolute;left:0;right:0;bottom:0;height:22%;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,transparent,rgba(4,21,12,.72) 42%,var(--ink) 100%);
+}
+.horizon::before{
+  content:"";position:absolute;left:0;right:0;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(211,166,60,.65) 20%,rgba(241,206,121,.9) 50%,rgba(211,166,60,.65) 80%,transparent);
+}
+.hero-inner{position:relative;z-index:2;max-width:56rem;}
+.wordmark{
+  font-family:var(--display);font-weight:500;
+  font-size:clamp(4.4rem,2rem + 15vw,11rem);
+  line-height:.9;letter-spacing:.01em;margin:0 0 .1em;
+}
+.tagline{
+  font-family:var(--display);font-style:italic;
+  font-size:clamp(1.35rem,1rem + 2.1vw,2.4rem);
+  line-height:1.26;color:#F0E9D6;margin:0 auto 2.2rem;max-width:30ch;
+}
+.hero-sub{
+  font-size:.72rem;letter-spacing:.36em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:2.2rem;font-weight:600;
+}
+.btnrow{display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap;}
+.btn{
+  display:inline-flex;align-items:center;gap:.6rem;text-decoration:none;
+  font-size:.76rem;letter-spacing:.2em;text-transform:uppercase;font-weight:600;
+  padding:1rem 2rem;border-radius:2px;transition:.32s ease;border:1px solid var(--gold);
+}
+.btn-solid{background:linear-gradient(135deg,var(--gold-lit),var(--gold));color:#20180A;}
+.btn-solid:hover{transform:translateY(-2px);box-shadow:0 12px 30px -12px rgba(211,166,60,.75);}
+.btn-ghost{color:var(--gold-lit);border-color:rgba(211,166,60,.5);}
+.btn-ghost:hover{background:rgba(211,166,60,.13);border-color:var(--gold);transform:translateY(-2px);}
+.scrollcue{
+  position:absolute;bottom:1.8rem;left:50%;transform:translateX(-50%);z-index:2;
+  font-size:.6rem;letter-spacing:.3em;text-transform:uppercase;color:rgba(207,197,172,.6);
+  display:flex;flex-direction:column;align-items:center;gap:.6rem;
+}
+.scrollcue i{display:block;width:1px;height:38px;background:linear-gradient(var(--gold),transparent);animation:drop 2.4s ease-in-out infinite;}
+@keyframes drop{0%,100%{opacity:.3;transform:scaleY(.5);transform-origin:top;}50%{opacity:1;transform:scaleY(1);}}
+
+/* ============================================================
+   PROBLEM
+   ============================================================ */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2.5rem,5vw,5.5rem);align-items:center;}
+@media(max-width:860px){.split{grid-template-columns:1fr;}}
+
+.bignum{
+  font-family:var(--display);font-weight:600;line-height:.86;
+  font-size:clamp(4.5rem,2rem + 15vw,10rem);margin:.35em 0 0;
+}
+.bignum-unit{
+  font-family:var(--body);font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--sand-dim);font-weight:600;margin-top:.9rem;
+}
+.factlist{list-style:none;margin:2.6rem 0 0;padding:0;}
+.factlist li{
+  display:flex;gap:1.15rem;padding:1.35rem 0;border-top:var(--rule);align-items:flex-start;
+}
+.factlist li:last-child{border-bottom:var(--rule);}
+.factlist .ic{
+  flex-shrink:0;width:40px;height:40px;border:1px solid rgba(211,166,60,.45);border-radius:50%;
+  display:grid;place-items:center;color:var(--gold);
+}
+.factlist .ic svg{width:19px;height:19px;}
+.factlist strong{display:block;color:#EFE8D6;font-weight:500;font-size:1.05rem;}
+.factlist span{font-size:.94rem;color:var(--sand-dim);}
+
+.pullquote{
+  font-family:var(--display);font-style:italic;
+  font-size:clamp(1.6rem,1.1rem + 2.2vw,2.9rem);line-height:1.24;
+  color:#F0E9D6;text-align:center;margin:clamp(3rem,6vw,5rem) auto 0;max-width:24ch;
+  padding-top:clamp(2.5rem,5vw,4rem);border-top:var(--rule);
+}
+
+/* ---------- photo frames (drop real photos in here) ---------- */
+.photo{
+  position:relative;overflow:hidden;border:1px solid rgba(211,166,60,.3);
+  background:
+    radial-gradient(90% 80% at 30% 20%,rgba(211,166,60,.13),transparent 60%),
+    linear-gradient(160deg,var(--forest-lift),var(--forest) 55%,#071E13);
+  display:grid;place-items:center;text-align:center;padding:1.5rem;min-height:220px;
+}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2;}
+.photo .ph{position:relative;z-index:1;color:rgba(207,197,172,.62);}
+.photo .ph svg{width:34px;height:34px;margin-inline:auto;margin-bottom:.75rem;color:var(--gold);opacity:.75;}
+.photo .ph b{display:block;font-family:var(--display);font-size:1.12rem;color:var(--gold-lit);font-weight:500;letter-spacing:.02em;}
+.photo .ph small{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;opacity:.6;}
+.photo.tall{min-height:min(72vh,560px);}
+.photostack{display:grid;gap:1rem;grid-template-columns:1fr 1fr;}
+.photostack .photo:last-child{grid-column:1 / -1;min-height:260px;}
+
+/* ============================================================
+   SOLUTION  |  four pillars
+   ============================================================ */
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(211,166,60,.2);border:var(--rule);margin-top:clamp(2.5rem,5vw,4rem);}
+@media(max-width:900px){.pillars{grid-template-columns:1fr 1fr;}}
+@media(max-width:520px){.pillars{grid-template-columns:1fr;}}
+.pillar{background:var(--forest);padding:clamp(1.8rem,3vw,2.6rem);transition:background .4s ease;}
+.pillar:hover{background:var(--forest-lift);}
+.pillar .ic{
+  width:52px;height:52px;border:1px solid rgba(211,166,60,.5);border-radius:50%;
+  display:grid;place-items:center;color:var(--gold);margin-bottom:1.4rem;transition:.4s ease;
+}
+.pillar:hover .ic{background:rgba(211,166,60,.14);transform:translateY(-3px);}
+.pillar .ic svg{width:24px;height:24px;}
+.pillar h3{font-size:1.28rem;margin-bottom:.6rem;color:#F0E9D6;}
+.pillar p{font-size:.92rem;color:var(--sand-dim);line-height:1.68;}
+
+/* ============================================================
+   PROCESS  |  five steps on a gold thread
+   ============================================================ */
+.thread{position:relative;margin-top:clamp(3rem,5vw,4.5rem);padding-left:0;list-style:none;}
+.thread::before{
+  content:"";position:absolute;left:26px;top:14px;bottom:14px;width:1px;
+  background:linear-gradient(180deg,transparent,rgba(211,166,60,.55) 8%,rgba(211,166,60,.55) 92%,transparent);
+}
+.step{display:grid;grid-template-columns:54px 1fr;gap:clamp(1.2rem,3vw,2.6rem);padding-block:clamp(1.5rem,3vw,2.2rem);position:relative;}
+.node{
+  width:54px;height:54px;border-radius:50%;background:var(--forest);
+  border:1px solid rgba(211,166,60,.55);display:grid;place-items:center;color:var(--gold);
+  position:relative;z-index:2;transition:.4s ease;
+}
+.step:hover .node{background:var(--gold);color:var(--forest);box-shadow:0 0 0 6px rgba(211,166,60,.12);}
+.node svg{width:23px;height:23px;}
+.step-body h3{font-size:clamp(1.5rem,1.2rem + 1.2vw,2.15rem);color:var(--gold-lit);margin-bottom:.4rem;letter-spacing:.02em;}
+.step-body p{color:var(--sand-dim);max-width:46ch;font-size:.98rem;}
+.step-tag{
+  font-size:.62rem;letter-spacing:.26em;text-transform:uppercase;color:var(--sand-dim);
+  opacity:.65;display:block;margin-bottom:.35rem;font-weight:600;
+}
+
+/* ============================================================
+   TRANSFORMATION STRIP  |  the risk: waste becomes wealth, literally
+   ============================================================ */
+.transform{background:var(--ink);padding-block:clamp(3.5rem,6vw,6rem);overflow:hidden;}
+.tline{
+  display:flex;align-items:center;gap:clamp(1rem,2.5vw,2.2rem);flex-wrap:wrap;
+  justify-content:center;padding-block:1.15rem;border-bottom:1px solid rgba(211,166,60,.14);
+  cursor:default;
+}
+.tline:first-of-type{border-top:1px solid rgba(211,166,60,.14);}
+.was{
+  font-family:var(--display);font-size:clamp(1.4rem,1rem + 1.9vw,2.4rem);
+  color:var(--sand-dim);opacity:.55;transition:.5s ease;
+}
+.arrow{color:var(--gold);flex-shrink:0;transition:.5s ease;}
+.arrow svg{width:34px;height:12px;}
+.becomes{
+  font-family:var(--display);font-size:clamp(1.4rem,1rem + 1.9vw,2.4rem);
+  color:var(--gold-lit);transition:.5s ease;
+}
+.tline:hover .was{opacity:.28;transform:translateX(-6px);}
+.tline:hover .becomes{transform:translateX(6px);text-shadow:0 0 26px rgba(241,206,121,.4);}
+.tline:hover .arrow{transform:scaleX(1.35);}
+
+/* ============================================================
+   WHAT WE CREATE
+   ============================================================ */
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.1rem;margin-top:clamp(2.5rem,5vw,3.5rem);}
+.cat{
+  border:var(--rule);padding:2rem 1.35rem;text-align:center;transition:.4s ease;background:rgba(19,68,48,.35);
+}
+.cat:hover{border-color:var(--gold);background:rgba(19,68,48,.7);transform:translateY(-4px);}
+.cat .ic{color:var(--gold);margin-bottom:1rem;}
+.cat .ic svg{width:34px;height:34px;margin-inline:auto;}
+.cat b{display:block;font-family:var(--display);font-size:1.22rem;color:#F0E9D6;font-weight:500;line-height:1.25;}
+.cat small{font-size:.78rem;color:var(--sand-dim);letter-spacing:.04em;}
+
+/* ============================================================
+   WHY CHOOSE  |  parchment, mirrors the Instagram card
+   ============================================================ */
+.whygrid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(1.5rem,3vw,2.6rem);margin-top:clamp(2.5rem,5vw,4rem);}
+@media(max-width:900px){.whygrid{grid-template-columns:1fr 1fr;}}
+@media(max-width:540px){.whygrid{grid-template-columns:1fr;}}
+.why{text-align:center;position:relative;padding-inline:.5rem;}
+.why + .why::before{content:"";position:absolute;left:calc(-1 * clamp(.75rem,1.5vw,1.3rem));top:12%;bottom:12%;width:1px;background:rgba(10,42,27,.16);}
+@media(max-width:900px){.why + .why::before{display:none;}}
+.why .disc{
+  width:74px;height:74px;border-radius:50%;background:var(--forest);
+  display:grid;place-items:center;color:var(--gold-lit);margin:0 auto 1.3rem;
+  transition:.45s cubic-bezier(.34,1.56,.64,1);
+}
+.why:hover .disc{transform:rotate(-8deg) scale(1.07);}
+.why .disc svg{width:31px;height:31px;}
+.why h3{font-size:.86rem;letter-spacing:.13em;text-transform:uppercase;font-family:var(--body);font-weight:700;margin-bottom:.7rem;color:#0A2A1B;}
+.why h3 em{display:block;font-style:normal;color:var(--gold-deep);font-weight:600;}
+.why p{font-size:.9rem;color:#4A5A48;line-height:1.65;}
+.brushline{
+  margin:clamp(3rem,5vw,4.5rem) auto 0;max-width:52rem;text-align:center;
+  background:var(--forest);color:var(--parchment);padding:2.1rem 2rem;border-radius:60% 40% 55% 45%/100% 100% 100% 100%;
+}
+.brushline b{display:block;font-family:var(--body);font-weight:700;letter-spacing:.1em;text-transform:uppercase;font-size:.86rem;color:#F0E9D6;}
+.brushline i{display:block;font-family:var(--display);font-style:italic;font-size:clamp(1.3rem,1rem + 1.5vw,1.95rem);color:var(--gold-lit);margin-top:.4rem;}
+.stamps{display:flex;justify-content:center;flex-wrap:wrap;gap:clamp(1.2rem,4vw,3.2rem);margin-top:2.6rem;}
+.stamp{display:flex;align-items:center;gap:.6rem;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:#31402F;}
+.stamp svg{width:26px;height:26px;color:var(--gold-deep);flex-shrink:0;}
+
+/* ============================================================
+   IMPACT
+   ============================================================ */
+.impact{
+  background:
+    linear-gradient(180deg,var(--ink),rgba(10,42,27,.9) 45%,#0F3B24 100%);
+  position:relative;overflow:hidden;
+}
+.impact::before{
+  content:"";position:absolute;right:-8%;top:50%;transform:translateY(-50%);
+  width:min(560px,62vw);aspect-ratio:.72;opacity:.1;pointer-events:none;
+  background:radial-gradient(circle at 50% 60%,var(--gold-lit),transparent 62%);
+}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(211,166,60,.2);border:var(--rule);margin-top:clamp(2.5rem,5vw,4rem);}
+@media(max-width:820px){.metrics{grid-template-columns:1fr 1fr;}}
+.metric{background:rgba(4,21,12,.55);padding:clamp(1.6rem,3vw,2.4rem) 1.4rem;text-align:center;}
+.metric b{display:block;font-family:var(--display);font-size:clamp(2.4rem,1.6rem + 2.6vw,3.6rem);color:var(--gold-lit);line-height:1;font-weight:600;}
+.metric span{display:block;font-size:.66rem;letter-spacing:.22em;text-transform:uppercase;color:var(--sand-dim);margin-top:.8rem;font-weight:600;}
+.metric small{display:block;font-size:.74rem;color:rgba(155,166,146,.75);margin-top:.5rem;font-style:italic;}
+.changelist{list-style:none;padding:0;margin:0;}
+.changelist li{display:flex;gap:1.1rem;align-items:flex-start;padding-block:1.15rem;border-bottom:var(--rule);}
+.changelist li:first-child{border-top:var(--rule);}
+.changelist .ic{flex-shrink:0;width:38px;height:38px;border:1px solid rgba(211,166,60,.45);border-radius:50%;display:grid;place-items:center;color:var(--gold);}
+.changelist .ic svg{width:18px;height:18px;}
+.changelist p{margin:0;font-size:1.02rem;color:#E4DDCB;}
+
+/* ============================================================
+   JOIN  |  gold band, the ask
+   ============================================================ */
+.band{
+  background:linear-gradient(120deg,var(--gold-deep) 0%,var(--gold) 30%,var(--gold-lit) 52%,var(--gold) 74%,var(--gold-deep) 100%);
+  color:#22190A;text-align:center;padding-block:clamp(3.5rem,6vw,5.5rem);
+}
+.band h2{color:#22190A;max-width:20ch;margin-inline:auto;}
+.band .tag{font-size:.7rem;letter-spacing:.34em;text-transform:uppercase;font-weight:700;opacity:.72;margin-bottom:1.2rem;}
+.band .hashes{margin-top:1.6rem;font-weight:700;letter-spacing:.1em;font-size:.82rem;opacity:.8;}
+.acts{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(1rem,2.5vw,2rem);margin-top:clamp(2.5rem,4vw,3.4rem);text-align:left;}
+@media(max-width:820px){.acts{grid-template-columns:1fr 1fr;}}
+@media(max-width:480px){.acts{grid-template-columns:1fr;}}
+.act{border-top:2px solid rgba(34,25,10,.35);padding-top:1.1rem;}
+.act b{display:block;font-weight:700;letter-spacing:.2em;text-transform:uppercase;font-size:.76rem;margin-bottom:.35rem;}
+.act span{font-size:.92rem;opacity:.78;line-height:1.55;}
+
+/* ============================================================
+   CONTACT
+   ============================================================ */
+.contactgrid{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(2.5rem,5vw,5rem);}
+@media(max-width:860px){.contactgrid{grid-template-columns:1fr;}}
+.detail{padding-block:1.25rem;border-bottom:var(--rule);}
+.detail:first-of-type{border-top:var(--rule);}
+.detail dt{font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:.4rem;}
+.detail dd{margin:0;font-size:1.08rem;color:#EFE8D6;font-family:var(--display);letter-spacing:.01em;}
+.detail dd a{text-decoration:none;transition:color .3s;}
+.detail dd a:hover{color:var(--gold-lit);}
+.detail dd small{display:block;font-family:var(--body);font-size:.82rem;color:var(--sand-dim);margin-top:.25rem;}
+.helpline{
+  border:1px solid rgba(211,166,60,.45);padding:clamp(1.6rem,3vw,2.2rem);
+  background:rgba(19,68,48,.4);
+}
+.helpline .eyebrow{margin-bottom:1rem;}
+.helpline .num{font-family:var(--display);font-size:clamp(1.7rem,1.2rem + 2vw,2.5rem);color:var(--gold-lit);display:block;text-decoration:none;line-height:1.15;}
+.helpline p{font-size:.88rem;color:var(--sand-dim);margin-top:.7rem;}
+.socials{display:flex;gap:.8rem;margin-top:1.8rem;flex-wrap:wrap;}
+.socials a{
+  width:46px;height:46px;border:1px solid rgba(211,166,60,.4);border-radius:50%;
+  display:grid;place-items:center;color:var(--gold);transition:.35s ease;
+}
+.socials a:hover{background:var(--gold);color:var(--forest);transform:translateY(-3px);}
+.socials svg{width:19px;height:19px;}
+
+footer{background:var(--ink);border-top:var(--rule);padding-block:2.6rem;}
+.footrow{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap;}
+.footrow p{font-size:.76rem;color:var(--sand-dim);margin:0;letter-spacing:.04em;}
+.footrow .fm{display:flex;align-items:center;gap:.6rem;font-family:var(--display);font-size:1.3rem;color:var(--gold-lit);letter-spacing:.06em;}
+.footrow .fm svg{width:26px;height:26px;}
+
+/* ---------- reveal on scroll ---------- */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .85s cubic-bezier(.22,.8,.3,1),transform .85s cubic-bezier(.22,.8,.3,1);}
+.rv.in{opacity:1;transform:none;}
+.rv.d1{transition-delay:.09s;} .rv.d2{transition-delay:.18s;}
+.rv.d3{transition-delay:.27s;} .rv.d4{transition-delay:.36s;}
+
+:focus-visible{outline:2px solid var(--gold-lit);outline-offset:3px;}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;}
+  html{scroll-behavior:auto;}
+  .rv{opacity:1;transform:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- ============================ NAV ============================ -->
+<header class="nav" id="nav">
+  <a href="#top" class="brandmark" aria-label="Shurjo home">
+    <svg viewBox="0 0 48 48" fill="none" aria-hidden="true">
+      <circle cx="24" cy="26" r="9" fill="#D3A63C"/>
+      <g stroke="#D3A63C" stroke-width="2.2" stroke-linecap="round">
+        <path d="M24 4v7M24 41v3M9 26H4M44 26h-5M12.5 14.5 8.9 10.9M35.5 14.5l3.6-3.6M12.5 37.5l-3.6 3.6M35.5 37.5l3.6 3.6"/>
+      </g>
+    </svg>
+    <span>Shurjo</span>
+  </a>
+  <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <nav class="navlinks" id="navlinks">
+    <a href="#problem">Problem</a>
+    <a href="#solution">Solution</a>
+    <a href="#process">What We Do</a>
+    <a href="products.html">Products</a>
+    <a href="#impact">Impact</a>
+    <a href="#contact" class="pill">Support Us</a>
+  </nav>
+</header>
+
+<!-- ============================ HERO ============================ -->
+<section class="hero" id="top">
+  <div class="sunwrap" aria-hidden="true">
+    <svg class="rays" viewBox="0 0 400 400" fill="none">
+      <g stroke="#D3A63C" stroke-linecap="round" opacity=".34">
+        <g stroke-width="2.4">
+          <path d="M200 26v52M200 322v52M26 200h52M322 200h52"/>
+          <path d="M77 77l37 37M286 286l37 37M323 77l-37 37M114 286l-37 37"/>
+        </g>
+        <g stroke-width="1.5" opacity=".7">
+          <path d="M290 33l-26 45M110 367l26-45M367 290l-45-26M33 110l45 26"/>
+          <path d="M110 33l26 45M290 367l-26-45M367 110l-45 26M33 290l45-26"/>
+        </g>
+      </g>
+    </svg>
+    <div class="glow"></div>
+  </div>
+  <div class="horizon" aria-hidden="true"></div>
+
+  <div class="hero-inner">
+    <p class="hero-sub">Dhaka &middot; Bangladesh &middot; Est. 2026</p>
+    <h1 class="wordmark gilt">Shurjo</h1>
+    <p class="tagline">Turning Bangladesh's waste into Bangladesh's wealth.</p>
+    <div class="btnrow">
+      <a href="products.html" class="btn btn-solid">See what we make</a>
+      <a href="#problem" class="btn btn-ghost">Why it matters</a>
+    </div>
+  </div>
+
+  <div class="scrollcue" aria-hidden="true"><i></i>Scroll</div>
+</section>
+
+<!-- ============================ PROBLEM ============================ -->
+<section class="on-deep" id="problem">
+  <div class="wrap">
+    <div class="split">
+      <div class="rv">
+        <p class="eyebrow">The problem</p>
+        <h2 class="gilt">Bangladesh has<br>a lot of waste.</h2>
+        <p class="bignum gilt" data-count="22000">0</p>
+        <p class="bignum-unit">Tonnes generated every single day</p>
+        <ul class="factlist">
+          <li>
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v5M14 11v5"/></svg></span>
+            <span><strong>Most of it is never recycled properly.</strong><span>It is burned, buried or left in open landfills at the edge of our cities.</span></span>
+          </li>
+          <li>
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.8 2.6 15.2 0 18M12 3c-2.6 2.8-2.6 15.2 0 18"/></svg></span>
+            <span><strong>It poisons the ground we live on.</strong><span>Waste leaks into our rivers, our soil and the air over Dhaka.</span></span>
+          </li>
+          <li>
+            <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21c5-3 8-6.5 8-11a8 8 0 0 0-16 0c0 4.5 3 8 8 11z"/><path d="M12 12v6M12 12c0-2 1.5-3.5 3.5-3.5M12 12c0-2-1.5-3.5-3.5-3.5"/></svg></span>
+            <span><strong>It costs us more than money.</strong><span>It harms our health, our environment and the future our generation inherits.</span></span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="rv d2">
+        <!-- To use the waste picker photo instead, change the filename to
+             landfill-alt.jpg and set style="object-position:62% center;" -->
+        <div class="photo tall">
+          <img src="images/landfill.jpg" alt="Household waste dumped at the edge of green vegetation">
+        </div>
+      </div>
+    </div>
+
+    <p class="pullquote rv">But what if this waste could become our <span class="gilt">wealth</span>?</p>
+  </div>
+</section>
+
+<!-- ============================ SOLUTION ============================ -->
+<section class="on-forest" id="solution">
+  <div class="wrap">
+    <div class="rv" style="text-align:center;max-width:44rem;margin-inline:auto;">
+      <p class="eyebrow center">Our solution</p>
+      <h2 class="gilt">Shurjo</h2>
+      <p class="lede" style="margin-top:1.4rem;">We are not another recycling company. We collect what Bangladesh throws away and give it back as something people are proud to own, made by people who are paid fairly to make it.</p>
+    </div>
+
+    <div class="pillars">
+      <div class="pillar rv">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 21c0-6 3-9 8-9-1 6-4 9-8 9z"/><path d="M12 21c0-5-2.5-7.5-7-7.5.9 5 3.5 7.5 7 7.5z"/><path d="M12 21V9M12 9c0-3 1.5-5 4-6-.5 3.5-1.8 5.3-4 6z"/></svg></span>
+        <h3>Sustainable solutions</h3>
+        <p>Long term systems for waste, not one off clean up drives that stop when the cameras leave.</p>
+      </div>
+      <div class="pillar rv d1">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9.5" r="2.3"/><path d="M3 19c0-3.3 2.7-5 6-5s6 1.7 6 5M16 14.5c2.7.3 5 1.9 5 4.5"/></svg></span>
+        <h3>Community empowerment</h3>
+        <p>We train and employ people in local communities so they build skills, earn with dignity and grow with us.</p>
+      </div>
+      <div class="pillar rv d2">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4.5 4 9.6l3.4 2M4 9.6h5.5"/><path d="m17 4.5 3 5.1-3.4 2M20 9.6h-5.5"/><path d="M12 20.5 9 15.4h6z"/><path d="M9.5 6.5 12 3l2.5 3.5M4.5 15h4M15.5 15h4"/></svg></span>
+        <h3>Responsible recycling</h3>
+        <p>Waste is sorted and processed the right way, so materials keep their value instead of losing it.</p>
+      </div>
+      <div class="pillar rv d3">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V9M9.5 19V5M15 19v-7M20.5 19V3"/></svg></span>
+        <h3>Economic growth</h3>
+        <p>Every tonne we recover keeps value inside Bangladesh and builds a more self reliant economy.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ PROCESS ============================ -->
+<section class="on-deep hairline" id="process">
+  <div class="wrap">
+    <div class="split" style="align-items:start;">
+      <div class="rv">
+        <p class="eyebrow">What we do</p>
+        <h2 class="gilt">Five steps<br>from bin to<br>beautiful.</h2>
+        <p class="lede" style="margin-top:1.6rem;max-width:34ch;">Nothing skips a step. That is how a discarded thing ends up worth keeping.</p>
+
+        <div class="photostack rv d2" style="margin-top:2.5rem;">
+          <div class="photo">
+            <img src="images/collect.jpg" alt="Waste collection crew loading a truck">
+          </div>
+          <!-- To use the single sorter photo instead, swap to sort-alt.jpg -->
+          <div class="photo">
+            <img src="images/sort.jpg" alt="Workers separating paper and plastic on a sorting line">
+          </div>
+          <div class="photo">
+            <img src="images/process.jpg" alt="Sorting facility separating organics, paper, plastic and metals">
+          </div>
+        </div>
+      </div>
+
+      <ol class="thread rv d1">
+        <li class="step">
+          <span class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2 7h11v9H2zM13 10h4l3 3.5V16h-7z"/><circle cx="6" cy="18.5" r="1.8"/><circle cx="16.5" cy="18.5" r="1.8"/></svg></span>
+          <div class="step-body"><span class="step-tag">Step one</span><h3>We collect</h3><p>We collect waste from cities, industries and communities, responsibly and on a schedule people can rely on.</p></div>
+        </li>
+        <li class="step">
+          <span class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.7-4.7M8 10.5h5"/></svg></span>
+          <div class="step-body"><span class="step-tag">Step two</span><h3>We sort</h3><p>Every load is separated by hand and by material, because good recycling starts with careful sorting.</p></div>
+        </li>
+        <li class="step">
+          <span class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.9 2.9l-.1-.1a1.7 1.7 0 0 0-2.9 1.2v.2a2 2 0 1 1-4 0v-.1A1.7 1.7 0 0 0 7 19.4a1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.9-2.9l.1-.1a1.7 1.7 0 0 0-1.2-2.9H1a2 2 0 1 1 0-4h.1A1.7 1.7 0 0 0 2.8 7"/></svg></span>
+          <div class="step-body"><span class="step-tag">Step three</span><h3>We process</h3><p>Materials are cleaned, treated and prepared so they are safe, durable and ready for a second life.</p></div>
+        </li>
+        <li class="step">
+          <span class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5.9 1.2.9 2h5.2c0-.8.3-1.5.9-2A6 6 0 0 0 12 3z"/></svg></span>
+          <div class="step-body"><span class="step-tag">Step four</span><h3>We create</h3><p>Our makers turn processed waste into bags, stationery, packaging and home pieces that stand on their own as good design.</p></div>
+        </li>
+        <li class="step">
+          <span class="node"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20h1"/></svg></span>
+          <div class="step-body"><span class="step-tag">Step five</span><h3>We share impact</h3><p>Every product carries a QR code. Scan it and you see exactly what it was made from and what your purchase changed.</p></div>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ TRANSFORMATION ============================ -->
+<section class="transform">
+  <div class="wrap">
+    <p class="eyebrow center rv" style="justify-content:center;">Waste into wealth</p>
+    <div class="tline rv">
+      <span class="was">Denim offcuts</span>
+      <span class="arrow"><svg viewBox="0 0 40 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M0 6h36M30 1l6 5-6 5"/></svg></span>
+      <span class="becomes">a signature tote</span>
+    </div>
+    <div class="tline rv d1">
+      <span class="was">Discarded office paper</span>
+      <span class="arrow"><svg viewBox="0 0 40 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M0 6h36M30 1l6 5-6 5"/></svg></span>
+      <span class="becomes">a notebook worth writing in</span>
+    </div>
+    <div class="tline rv d2">
+      <span class="was">Old sari fabric</span>
+      <span class="arrow"><svg viewBox="0 0 40 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M0 6h36M30 1l6 5-6 5"/></svg></span>
+      <span class="becomes">a pouch someone treasures</span>
+    </div>
+    <div class="tline rv d3">
+      <span class="was">Rice sacks and jute waste</span>
+      <span class="arrow"><svg viewBox="0 0 40 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M0 6h36M30 1l6 5-6 5"/></svg></span>
+      <span class="becomes">a backpack built to last</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ WHAT WE CREATE ============================ -->
+<section class="on-forest" id="create">
+  <div class="wrap">
+    <div class="rv" style="text-align:center;max-width:44rem;margin-inline:auto;">
+      <p class="eyebrow center">What we create</p>
+      <h2 class="gilt">From waste to wonderful.</h2>
+      <p class="lede" style="margin-top:1.3rem;">Sustainable. Stylish. Meaningful. Our customers do not choose Shurjo because our products are recycled. They choose them because they are beautifully made.</p>
+    </div>
+
+    <div class="cats">
+      <a href="products.html#textile" class="cat rv" style="text-decoration:none;">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 8h16l-1.3 12H5.3z"/><path d="M8.5 8V6a3.5 3.5 0 0 1 7 0v2"/></svg></span>
+        <b>Textile</b><small>Bags, sleeves, home pieces</small>
+      </a>
+      <a href="products.html#paper" class="cat rv d1" style="text-decoration:none;">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6.5C10 4.8 7.5 4.3 4 4.5v13c3.5-.2 6 .3 8 2 2-1.7 4.5-2.2 8-2v-13c-3.5-.2-6 .3-8 2z"/><path d="M12 6.5v14"/></svg></span>
+        <b>Paper</b><small>Notebooks, cards, packaging</small>
+      </a>
+      <a href="products.html#construction" class="cat rv d2" style="text-decoration:none;">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M3 8h7v7H3zM14 8h7v7h-7zM8.5 15.5h7V21h-7zM8.5 3h7v4.5h-7z"/></svg></span>
+        <b>Construction</b><small>Pavers, tiles, benches</small>
+      </a>
+      <a href="products.html#organic" class="cat rv d3" style="text-decoration:none;">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 22V11M12 11c0-3.3 2.4-6 6-6 0 3.3-2.4 6-6 6zM12 14c0-2.8-2-5-5-5 0 2.8 2 5 5 5z"/><path d="M7 22h10"/></svg></span>
+        <b>Organic</b><small>Compost, fertiliser, pots</small>
+      </a>
+      <a href="products.html#metal" class="cat rv d4" style="text-decoration:none;">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="9" width="18" height="11" rx="1.5"/><path d="M9 9V6M12 9V4M15 9V6M3 14h18"/></svg></span>
+        <b>Metal</b><small>Organisers, lamps, seating</small>
+      </a>
+    </div>
+
+    <div class="rv" style="text-align:center;margin-top:clamp(2.5rem,5vw,3.5rem);">
+      <a href="products.html" class="btn btn-solid">Browse the collection</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ WHY CHOOSE ============================ -->
+<section class="on-parchment" id="why">
+  <div class="wrap">
+    <div class="rv" style="text-align:center;max-width:44rem;margin-inline:auto;">
+      <p class="eyebrow center">Why choose Shurjo</p>
+      <h2>Because sustainability<br>shouldn't mean<br><span class="gilt">settling for ordinary.</span></h2>
+    </div>
+
+    <div class="whygrid">
+      <div class="why rv">
+        <span class="disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="m12 3 4 5-4 13-4-13z"/><path d="M4 8h16L12 3 4 8zM8 8h8"/></svg></span>
+        <h3>Premium.<em>Not ordinary.</em></h3>
+        <p>Exclusive, high quality products that are stylish, durable and made to be proud of, not cheap recycled items.</p>
+      </div>
+      <div class="why rv d1">
+        <span class="disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 21V10M12 10c0-3.6 2.6-6.5 6.5-6.5 0 3.6-2.6 6.5-6.5 6.5zM12 14c0-3-2.2-5.5-5.5-5.5 0 3 2.2 5.5 5.5 5.5z"/></svg></span>
+        <h3>Meaningful.<em>Not mindless.</em></h3>
+        <p>Every product has a story. From the waste we recover to the people who make it, every detail creates real impact.</p>
+      </div>
+      <div class="why rv d2">
+        <span class="disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="7" r="3"/><path d="M6 20c0-3.6 2.7-6 6-6s6 2.4 6 6"/><path d="M12 3.5c1-1 2.6-1 3.6 0"/></svg></span>
+        <h3>Empowering.<em>Not exploiting.</em></h3>
+        <p>We create fair opportunities and train communities across Bangladesh to build skills, earn with dignity and grow together.</p>
+      </div>
+      <div class="why rv d3">
+        <span class="disc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3.5 9h17M3.5 15h17M12 3c2.5 2.8 2.5 15.2 0 18M12 3c-2.5 2.8-2.5 15.2 0 18"/></svg></span>
+        <h3>Sustainable.<em>Not temporary.</em></h3>
+        <p>We focus on long term solutions for a cleaner environment, a stronger economy and a better future for the next generation.</p>
+      </div>
+    </div>
+
+    <div class="brushline rv">
+      <b>When you choose Shurjo, you're not just buying a product.</b>
+      <i>You're supporting a better tomorrow.</i>
+    </div>
+
+    <div class="stamps rv d1">
+      <span class="stamp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 21c0-6 3.5-9.5 9-9.5-1 6.5-4.5 9.5-9 9.5zM12 21c0-5-2.8-8-7.5-8 .8 5.5 3.5 8 7.5 8z"/></svg> Good for the planet</span>
+      <span class="stamp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9.5" r="2.2"/><path d="M3 19c0-3.3 2.7-5 6-5s6 1.7 6 5M16 14.5c2.7.3 5 1.9 5 4.5"/></svg> Good for the people</span>
+      <span class="stamp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 20.5S3.5 15 3.5 9.2A4.7 4.7 0 0 1 12 6.5a4.7 4.7 0 0 1 8.5 2.7c0 5.8-8.5 11.3-8.5 11.3z"/></svg> Good for the future</span>
+      <span class="stamp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="12" cy="14" r="4.5"/><path d="M12 4v3M4.5 14h-2M21.5 14h-2M6.5 8.5 5 7M17.5 8.5 19 7"/></svg> Proudly Bangladeshi</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ IMPACT ============================ -->
+<section class="impact" id="impact">
+  <div class="wrap">
+    <div class="split">
+      <div class="rv">
+        <p class="eyebrow">How it helps Bangladesh</p>
+        <h2 class="gilt">Be a part<br>of the change.</h2>
+        <ul class="changelist" style="margin-top:2.4rem;">
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9.5" r="2.2"/><path d="M3 19c0-3.3 2.7-5 6-5s6 1.7 6 5M16 14.5c2.7.3 5 1.9 5 4.5"/></svg></span><p>We create jobs in communities across Bangladesh.</p></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 21V10M12 10c0-3.6 2.6-6.5 6.5-6.5 0 3.6-2.6 6.5-6.5 6.5z"/></svg></span><p>We reduce pollution and protect our environment.</p></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18 9 12l4 3.5L20 7"/><path d="M20 12V7h-5"/></svg></span><p>We build a circular economy for a stronger Bangladesh.</p></li>
+          <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M12 20.5S3.5 15 3.5 9.2A4.7 4.7 0 0 1 12 6.5a4.7 4.7 0 0 1 8.5 2.7c0 5.8-8.5 11.3-8.5 11.3z"/></svg></span><p>Every small step together creates a big impact.</p></li>
+        </ul>
+      </div>
+
+      <div class="rv d2">
+        <div class="photo tall">
+          <img src="images/community.jpg" alt="Training session for collection workers beside baled plastic" style="object-position:58% center;">
+        </div>
+      </div>
+    </div>
+
+    <!-- These are our first-year targets. Judges respond well to honest numbers,
+         so they are labelled as goals rather than results. Edit freely. -->
+    <div class="metrics rv">
+      <div class="metric"><b data-count="12">0</b><span>Tonnes recovered</span><small>Year one target</small></div>
+      <div class="metric"><b data-count="40">0</b><span>Makers employed</span><small>Year one target</small></div>
+      <div class="metric"><b data-count="6">0</b><span>Collection zones</span><small>Starting in Dhaka</small></div>
+      <div class="metric"><b data-count="100">0</b><span>Percent traceable</span><small>QR code on every item</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ JOIN ============================ -->
+<section class="band" id="join">
+  <div class="wrap">
+    <p class="tag rv">Help Shurjo create a better tomorrow</p>
+    <h2 class="rv">Together, we can turn waste into wealth.</h2>
+    <div class="acts">
+      <div class="act rv"><b>Support</b><span>Choose sustainable. Choose Shurjo.</span></div>
+      <div class="act rv d1"><b>Share</b><span>Spread the word. Inspire others.</span></div>
+      <div class="act rv d2"><b>Shop</b><span>Buy our products. Support our mission.</span></div>
+      <div class="act rv d3"><b>Sustain</b><span>Together, let's turn waste into wealth.</span></div>
+    </div>
+    <p class="hashes rv">#Shurjo &nbsp; #WasteToWealth &nbsp; #BetterBangladesh</p>
+  </div>
+</section>
+
+<!-- ============================ CONTACT ============================ -->
+<section class="on-deep" id="contact">
+  <div class="wrap">
+    <div class="contactgrid">
+      <div class="rv">
+        <p class="eyebrow">Get in touch</p>
+        <h2 class="gilt">We'd love<br>to hear from you.</h2>
+        <!-- FACEBOOK: replace the URL in both places below when the new page is ready -->
+        <dl style="margin-top:2.2rem;">
+          <div class="detail"><dt>Email</dt><dd><a href="mailto:Shurjoofficial.bd@gmail.com">Shurjoofficial.bd@gmail.com</a><small>Orders, partnerships and bulk enquiries</small></dd></div>
+          <div class="detail"><dt>Instagram</dt><dd><a href="https://www.instagram.com/shurjo.bd" target="_blank" rel="noopener">@shurjo.bd</a></dd></div>
+          <div class="detail"><dt>Facebook</dt><dd><a href="https://www.facebook.com/profile.php?id=61593564467219" target="_blank" rel="noopener">Shurjo on Facebook</a></dd></div>
+          <div class="detail"><dt>Where to find us</dt><dd>Dhaka, Bangladesh<small>Collection across six city zones</small></dd></div>
+        </dl>
+      </div>
+
+      <div class="rv d2">
+        <div class="helpline">
+          <p class="eyebrow">Shurjo helpline</p>
+          <a href="tel:+8801748311657" class="num">+880 1748 311657</a>
+          <p>Saturday to Thursday, 9am to 6pm. Call us to arrange a collection, ask about an order or report waste in your area.</p>
+          <div class="socials">
+            <a href="https://www.instagram.com/shurjo.bd" target="_blank" rel="noopener" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61593564467219" target="_blank" rel="noopener" aria-label="Facebook">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M15.2 8h-1.6c-.9 0-1.4.5-1.4 1.4V11h3l-.4 2.6h-2.6V21"/><path d="M9.6 13.6h2.6"/></svg>
+            </a>
+            <a href="mailto:Shurjoofficial.bd@gmail.com" aria-label="Email">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            </a>
+            <a href="tel:+8801748311657" aria-label="Phone">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 3h4l2 5-2.5 1.5a12 12 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2.2 2A17 17 0 0 1 3 5.2 2 2 0 0 1 5 3z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div style="margin-top:1.6rem;border:1px dashed rgba(211,166,60,.35);padding:1.4rem;text-align:center;">
+          <p style="font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:.6rem;">Scan for our products</p>
+          <p style="font-size:.86rem;color:var(--sand-dim);margin:0;">Every Shurjo tag carries a QR code that opens the product's full story and impact.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footrow">
+    <span class="fm">
+      <svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><circle cx="24" cy="26" r="9" fill="#D3A63C"/><g stroke="#D3A63C" stroke-width="2.2" stroke-linecap="round"><path d="M24 4v7M9 26H4M44 26h-5M12.5 14.5 8.9 10.9M35.5 14.5l3.6-3.6"/></g></svg>
+      Shurjo
+    </span>
+    <p>Turning Bangladesh's Waste into Bangladesh's Wealth.</p>
+    <p>&copy; 2026 Shurjo. Made in Bangladesh.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* sticky nav */
+  var nav = document.getElementById("nav");
+  function onScroll(){ nav.classList.toggle("stuck", window.scrollY > 40); }
+  window.addEventListener("scroll", onScroll, {passive:true}); onScroll();
+
+  /* mobile menu */
+  var burger = document.getElementById("burger"), links = document.getElementById("navlinks");
+  burger.addEventListener("click", function(){
+    var open = links.classList.toggle("open");
+    burger.setAttribute("aria-expanded", open);
+  });
+  links.querySelectorAll("a").forEach(function(a){
+    a.addEventListener("click", function(){ links.classList.remove("open"); burger.setAttribute("aria-expanded","false"); });
+  });
+
+  /* reveal on scroll */
+  var revealables = document.querySelectorAll(".rv");
+  if(reduce || !("IntersectionObserver" in window)){
+    revealables.forEach(function(el){ el.classList.add("in"); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target); } });
+    }, {threshold:.14, rootMargin:"0px 0px -8% 0px"});
+    revealables.forEach(function(el){ io.observe(el); });
+  }
+
+  /* count up numbers */
+  var counters = document.querySelectorAll("[data-count]");
+  function run(el){
+    var target = parseInt(el.getAttribute("data-count"), 10);
+    if(reduce){ el.textContent = target.toLocaleString("en-US"); return; }
+    var start = null, dur = 1500;
+    function frame(t){
+      if(!start) start = t;
+      var p = Math.min((t - start)/dur, 1);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.floor(eased * target).toLocaleString("en-US");
+      if(p < 1) requestAnimationFrame(frame); else el.textContent = target.toLocaleString("en-US");
+    }
+    requestAnimationFrame(frame);
+  }
+  if("IntersectionObserver" in window){
+    var co = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ run(e.target); co.unobserve(e.target); } });
+    }, {threshold:.5});
+    counters.forEach(function(el){ co.observe(el); });
+  } else {
+    counters.forEach(run);
+  }
+})();
+</script>
+</body>
+</html>
