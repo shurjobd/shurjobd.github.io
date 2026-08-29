@@ -2,7 +2,7 @@
 
 **Turning Bangladesh's waste into Bangladesh's wealth.**
 
-🌐 **[shurjo.github.io](https://shurjo.github.io)**
+🌐 **[shurjo.github.io](https://shurjobd.github.io)**
 
 ---
 
