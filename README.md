@@ -1,41 +1,29 @@
-# Shurjo website
+# Shurjo
 
-Two pages. `index.html` is the main site. `products.html` is the collection page with prices and stories.
+The Shurjo website. Live at https://shurjo.github.io
 
-## Before the pitch, edit these
+Two pages:
 
-**Contact details** are in `index.html`, in the section marked `<!-- REPLACE these with your real details -->`. Right now the phone number and emails are placeholders.
+- `index.html` is the main site. Problem, solution, process, impact, contact.
+- `products.html` is the collection page, linked from the second QR code.
+- `images/` holds every photo. Filenames must stay exactly as they are.
 
-**The numbers** in the Impact section are labelled as year one targets, not results. Judges tend to trust a target more than an invented statistic, but change them to whatever your team actually decided.
+## Editing things
 
-**Prices and products** are all in `products.html`. Each product is one `<article class="item">` block. Copy a block to add a seventh product, delete one to have five.
+**Contact details** are near the bottom of `index.html`, in the section marked `id="contact"`. The Facebook URL appears three times: twice in `index.html` and once in the footer of `products.html`. Find and replace all three when the new page is ready.
 
-## Adding your photos
+**Products** are in `products.html`, grouped into five collections. Each one is a single `<article class="card">` block. Copy a block to add a product, delete one to remove it. Prices sit in the line marked `class="price"`.
 
-Make a folder called `images` next to the HTML files. Then find any block that looks like this:
+**Impact numbers** on `index.html` are labelled as year one targets, not results. Change the figures in the `data-count` attributes if the team agrees different ones.
 
-```html
-<div class="ph">
-  <b>Photo: Signature Tote</b><small>images/tote.jpg</small>
-</div>
-```
+## Photos
 
-Replace the whole `<div class="ph">...</div>` with:
+Every image slot expects a specific filename, listed in small grey text on any placeholder that is still empty. Names are lowercase and end in `.jpg`. GitHub is case sensitive even though your computer is not, so `Tote.JPG` will work on a laptop and fail once live.
 
-```html
-<img src="images/tote.jpg" alt="Shurjo Signature Tote">
-```
+## Updating the live site
 
-The photo will crop and fill the frame automatically. The small grey text in each placeholder tells you the filename it expects.
+Edit a file on GitHub with the pencil icon and commit, or upload a replacement with the same name. Changes appear in about a minute.
 
-If you leave a placeholder in, it still looks intentional rather than broken, so there is no rush to fill all of them.
+## On pitch day
 
-## Getting it online for the QR codes
-
-The fastest option is Netlify Drop at app.netlify.com/drop. Drag the whole folder onto the page and it gives you a live link in about ten seconds, no account needed to start. Point QR code one at that link, and QR code two at the same link with `/products.html` on the end.
-
-GitHub Pages works too if you already have an account and want a nicer address.
-
-## If the venue has no wifi
-
-The fonts load from Google. Without internet they fall back to Georgia and a system sans, which still looks fine, just less distinctive. If you want to be safe, open the site once on the laptop beforehand so it is cached, and keep a screen recording as backup.
+Fonts load from Google, so with no internet they fall back to Georgia and a system sans. Still looks fine, just less distinctive. Open the site once beforehand so it caches, and keep a screen recording as a backup in case the venue wifi fails.
