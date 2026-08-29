@@ -5,6 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shurjo | Turning Bangladesh's Waste into Bangladesh's Wealth</title>
 <meta name="description" content="Shurjo collects, sorts and transforms Bangladesh's waste into premium products that create jobs, cut pollution and build a circular economy.">
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<!-- LINK PREVIEW. If the site address ever changes, update the two
+     absolute URLs below to match your real address. They must be absolute. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Shurjo">
+<meta property="og:title" content="Shurjo">
+<meta property="og:description" content="Bangladesh generates over 22,000 tonnes of waste a day. We collect it, sort it, and remake it into products people are proud to own. Turning Bangladesh's waste into Bangladesh's wealth.">
+<meta property="og:url" content="https://shurjobd.github.io/">
+<meta property="og:image" content="https://shurjobd.github.io/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Shurjo. Turning Bangladesh's waste into Bangladesh's wealth.">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Shurjo">
+<meta name="twitter:description" content="Turning Bangladesh's waste into Bangladesh's wealth. Five waste streams, remade into products worth keeping.">
+<meta name="twitter:image" content="https://shurjobd.github.io/preview.png">
+<meta name="theme-color" content="#0A2A1B">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Karla:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -432,6 +453,17 @@ section{padding-block:clamp(4.5rem,3rem + 8vw,9rem);position:relative;}
 .socials a:hover{background:var(--gold);color:var(--forest);transform:translateY(-3px);}
 .socials svg{width:19px;height:19px;}
 
+.qrcard{
+  margin-top:1.6rem;border:1px solid rgba(211,166,60,.4);
+  padding:clamp(1.4rem,2.5vw,1.9rem);text-align:center;background:rgba(19,68,48,.4);
+}
+.qrimg{
+  width:min(190px,58vw);margin:0 auto 1.2rem;background:#fff;padding:.85rem;
+  border:1px solid rgba(211,166,60,.5);
+}
+.qrimg img{width:100%;height:auto;display:block;}
+.qrcard .cap{font-size:.86rem;color:var(--sand-dim);margin:0;}
+
 footer{background:var(--ink);border-top:var(--rule);padding-block:2.6rem;}
 .footrow{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap;}
 .footrow p{font-size:.76rem;color:var(--sand-dim);margin:0;letter-spacing:.04em;}
@@ -825,9 +857,12 @@ footer{background:var(--ink);border-top:var(--rule);padding-block:2.6rem;}
           </div>
         </div>
 
-        <div style="margin-top:1.6rem;border:1px dashed rgba(211,166,60,.35);padding:1.4rem;text-align:center;">
-          <p style="font-size:.66rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:.6rem;">Scan for our products</p>
-          <p style="font-size:.86rem;color:var(--sand-dim);margin:0;">Every Shurjo tag carries a QR code that opens the product's full story and impact.</p>
+        <div class="qrcard">
+          <p class="eyebrow" style="justify-content:center;margin-bottom:1rem;">Scan for our products</p>
+          <div class="qrimg">
+            <img src="images/qr-products.png" alt="QR code linking to the Shurjo collection page">
+          </div>
+          <p class="cap">Opens the full collection on your phone. Every Shurjo tag carries a code like this one, linking to that product's own story and impact.</p>
         </div>
       </div>
     </div>
