@@ -1,29 +1,44 @@
 # Shurjo
 
-The Shurjo website. Live at https://shurjo.github.io
+**Turning Bangladesh's waste into Bangladesh's wealth.**
 
-Two pages:
+🌐 **[shurjo.github.io](https://shurjo.github.io)**
 
-- `index.html` is the main site. Problem, solution, process, impact, contact.
-- `products.html` is the collection page, linked from the second QR code.
-- `images/` holds every photo. Filenames must stay exactly as they are.
+---
 
-## Editing things
+Bangladesh generates over 22,000 tonnes of waste every day, and most of it is never recycled properly. It is burned, buried, or left in open landfills at the edge of our cities, where it harms our environment, our health and our future.
 
-**Contact details** are near the bottom of `index.html`, in the section marked `id="contact"`. The Facebook URL appears three times: twice in `index.html` and once in the footer of `products.html`. Find and replace all three when the new page is ready.
+Shurjo exists to change what happens to that waste.
 
-**Products** are in `products.html`, grouped into five collections. Each one is a single `<article class="card">` block. Copy a block to add a product, delete one to remove it. Prices sit in the line marked `class="price"`.
+We collect it from cities, industries and communities. We sort it by material, process it properly, and remake it into products people are genuinely proud to own. Not cheap recycled goods, but things that stand on their own as good design and happen to be made from what was thrown away.
 
-**Impact numbers** on `index.html` are labelled as year one targets, not results. Change the figures in the `data-count` attributes if the team agrees different ones.
+Every product carries a QR code. Scan it and you see the waste stream it came from, who made it, and the weight your purchase kept out of a landfill.
 
-## Photos
+## What we make
 
-Every image slot expects a specific filename, listed in small grey text on any placeholder that is still empty. Names are lowercase and end in `.jpg`. GitHub is case sensitive even though your computer is not, so `Tote.JPG` will work on a laptop and fail once live.
+Five collections, drawn from five waste streams.
 
-## Updating the live site
+| Collection | Made from | Products |
+|---|---|---|
+| Textile | Garment offcuts | Backpacks, totes, laptop sleeves |
+| Paper | Recovered waste paper | Notebooks, seed paper cards, packaging |
+| Construction | Demolition rubble | Paving blocks, terrazzo tiles, benches |
+| Organic | Food and market waste | Compost, liquid fertiliser, plant pots |
+| Metal | Scrap and salvage | Desk organisers, lamps, seating |
 
-Edit a file on GitHub with the pencil icon and commit, or upload a replacement with the same name. Changes appear in about a minute.
+## Why it matters
 
-## On pitch day
+We create jobs in communities across Bangladesh. We reduce pollution and protect our environment. We build a circular economy for a stronger, more self reliant country. Every small step together creates a big impact.
 
-Fonts load from Google, so with no internet they fall back to Georgia and a system sans. Still looks fine, just less distinctive. Open the site once beforehand so it caches, and keep a screen recording as a backup in case the venue wifi fails.
+## Get in touch
+
+- Email: Shurjoofficial.bd@gmail.com
+- Phone: +880 1748 311657
+- Instagram: [@shurjo.bd](https://www.instagram.com/shurjo.bd)
+- Facebook: [Shurjo](https://www.facebook.com/profile.php?id=61593564467219)
+
+---
+
+*Shurjo means sun. Every product has a story. Every story creates an impact.*
+
+<sub>This repository hosts the Shurjo website. Built as static HTML and CSS, served on GitHub Pages.</sub>
